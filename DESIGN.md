@@ -1,9 +1,9 @@
-# Condo RAG — System Design
+# Condo RAG — Design
 
 A RAG system over the documents of a single condo building (bylaws, rules &
 regs, insurance policies, financial statements, board meeting minutes, vendor
-contracts, maintenance reports). Built primarily as a vehicle for learning
-AI system design, with retrieval & ranking as the area of greatest depth.
+contracts, maintenance reports). Retrieval & ranking is the area of greatest
+depth.
 
 ## Problem & users
 
@@ -99,11 +99,11 @@ quality. Run on every "release" of the pipeline to catch regressions.
 
 ## Stack
 
-- **Python** — interview default, rich ecosystem.
-- **PostgreSQL + pgvector** — picked over Pinecone/Weaviate because (a) it
-  forces interesting design discussions about ANN index types (HNSW vs.
-  IVFFlat) and hybrid search in one system, and (b) it's trivially
-  swappable later, which is itself a useful trade-off conversation.
+- **Python** — rich ecosystem for ML/AI work.
+- **PostgreSQL + pgvector** — picked over Pinecone/Weaviate because it
+  keeps the ANN index and hybrid search (FTS) in a single system, and
+  scales fine at our corpus size. Pluggable behind a `VectorStore`
+  interface so it can be swapped later if needed.
 - **Embeddings** — start with a hosted model (Voyage `voyage-3` or OpenAI
   `text-embedding-3-large`) behind a pluggable interface, so we can compare
   to a local `sentence-transformers` model later.
